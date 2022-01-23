@@ -9,7 +9,7 @@ export default memo(function App() {
     return (
         <div>
             <XZAppHeader />
-                { useRoutes(routes) }
+            { useRoutes(routes) }   
             <XZAppfooter />
         </div>
     );

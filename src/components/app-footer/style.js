@@ -4,6 +4,7 @@ export const FooterWrapper = styled.div`
     width: 100%;
     height: 173px;
     background: #f2f2f2;
+    overflow: hidden;
     .content {
         padding-top: 15px;
         box-sizing: border-box;

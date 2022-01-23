@@ -9,11 +9,19 @@ import { HeaderWrapper, HeaderLeft, HeaderRight } from './style'
 export default memo(function XZAppHeader() {
     // 遍历link数据
     const linkData = (item, index) => {
+        if(index === 0) {
+            return (
+                <NavLink to="/discovery">
+                    { item.title }
+                    <i className='sprite_01 icon'></i>
+                </NavLink>
+            )
+        }
         if(index < 3) {
             return (
                 <NavLink to={ item.link }>
                     { item.title }
-                <i className='sprite_01 icon'></i>
+                    <i className='sprite_01 icon'></i>
                 </NavLink>
             )
         }else {

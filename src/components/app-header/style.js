@@ -5,8 +5,7 @@ export const HeaderWrapper = styled.div`
     box-sizing: border-box;
     background: #242424;
     font-size: 14px;
-    border-bottom: 1px solid #000;
-    margin-bottom: 5px;
+    border-bottom: 1px solid #C20C0C;
     .content {
         height: 70px;
         line-height: 70px;
@@ -16,7 +15,8 @@ export const HeaderWrapper = styled.div`
     .under {
         height: 5px;
         width: 100%;
-        background: #C20C0C;
+        background-color: #C20C0C;
+        border-bottom: 1px solid #C20C0C;
     }
 `
 
@@ -50,6 +50,11 @@ export const HeaderLeft = styled.div`
                     .icon {
                         display: block;
                     }
+                }
+            }
+            .current {
+                .icon {
+                    display: none;
                 }
             }
             .icon {
