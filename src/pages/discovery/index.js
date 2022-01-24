@@ -1,10 +1,17 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import { DiscoveryWarpper, TopMenu } from './style'
 import { dicoverMenu } from '@/common/local-data.js'
+import request from '@/services/request.js'
 
 export default memo(function Discovery(props) {
+    useEffect(() => {
+        request("/banner")
+        .then(res => {
+            console.log(res);
+        })
+    })
     return (
         <DiscoveryWarpper>
             <div className='top wrap-v1'>
