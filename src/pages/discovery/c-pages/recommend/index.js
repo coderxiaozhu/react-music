@@ -1,11 +1,34 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { RecommendWrapper } from './style'
+import { getTopBannersAction } from './store/actionCreators'
 
-export default memo(function XZrecommend() {
+function XZrecommend() {
+    const { topBanners } = useSelector(state => ({
+        topBanners: state.recommend.topBanners
+    }), shallowEqual)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTopBannersAction())
+    }, [dispatch])
     return (
         <RecommendWrapper>
-            111asd4a6as4das44444
+            <h2>XZrecommend: { topBanners.length }</h2>
         </RecommendWrapper>
     );
-});
+};
+
+export default memo(XZrecommend)
+
+// const mapStateToProps = state => ({ 
+//     topBanners: state.recommend.topBanners
+// })
+
+// const mapDispatchToProps = dispatch => ({
+//     getTopBanners: () => {
+//         dispatch(getTopBannersAction())
+//     }
+// })
+
+// export default connect(mapStateToProps, mapDispatchToProps)(memo(XZrecommend))

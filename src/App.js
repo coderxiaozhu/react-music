@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { useRoutes } from 'react-router-dom'
-
 import routes from './router';
 
 import XZAppfooter from '@/components/app-footer/XZAppFooter'
