@@ -5,3 +5,11 @@ export const getTopBanners = () => {
         url: '/banner'
     })
 }
+export function getHotRecommends(limit) {
+    return request({
+        url: "/personalized",
+        params: {
+          limit
+        }
+      })
+}
