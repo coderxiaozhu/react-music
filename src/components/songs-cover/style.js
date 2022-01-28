@@ -67,7 +67,6 @@ export const SongsCoverWapper = styled.div`
     .coverBottom {
         display: flex;
         flex-direction: column;
-        height: 40px;
         margin-top: 5px;
         .songName, .authorName {
             display: inline-block;
@@ -75,6 +74,12 @@ export const SongsCoverWapper = styled.div`
             text-overflow: ellipsis;
             white-space: nowrap;
             word-wrap: normal;
+            width: 140px;
+        }
+        .songNameNext {
+            font-size: 14px;
+            width: 140px;
+            color: #000;
         }
         .songName {
             color: #000;

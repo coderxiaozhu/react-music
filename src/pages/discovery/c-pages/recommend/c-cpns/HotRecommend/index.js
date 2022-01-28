@@ -14,7 +14,6 @@ export default memo(function XZhotRecommend() {
         hotRecommends: state.getIn(["recommend", "hotRecommends"])
     }), shallowEqual)
     const dispatch = useDispatch()
-    console.log(hotRecommends);
 
     // other hook
     useEffect(() => {
@@ -28,7 +27,7 @@ export default memo(function XZhotRecommend() {
                     hotRecommends.map((item, index) => {
                         return (
                             <div key={item.id}>
-                                <SongsCover info={ item } margin="30px 0 0px 0"></SongsCover>
+                                <SongsCover info={ item } margin="30px 0 0px 0" writer={ false }></SongsCover>
                             </div>
                         )
                     })

@@ -8,6 +8,8 @@ import {
 } from './style'
 import XZtopBanner from './c-cpns/TopBanners';
 import XZhotRecommend from './c-cpns/HotRecommend'
+import XZnewAlbums from './c-cpns/NewAlbums'
+import XZrecommendRanking from './c-cpns/Recommend-Ranking'
 function XZrecommend() {
 
     return (
@@ -16,6 +18,8 @@ function XZrecommend() {
             <RecommendContent className='wrap-v2'>
                 <RecommendContentLeft>
                     <XZhotRecommend />
+                    <XZnewAlbums />
+                    <XZrecommendRanking />
                 </RecommendContentLeft>
                 <RecommendContentRight></RecommendContentRight>
             </RecommendContent>
