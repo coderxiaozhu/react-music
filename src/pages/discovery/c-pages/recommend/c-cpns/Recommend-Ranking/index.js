@@ -28,9 +28,9 @@ export default memo(function XZrecommendRanking() {
             <XZthemeHeaderRcm title="榜单" />
             <div className='contentWapper'>
                 <div className='content'>
-                    <XZtopRank info={ originRanking } />
+                    <XZtopRank info={ upRanking } />    
                     <XZtopRank info={ newRanking } />
-                    <XZtopRank info={ upRanking } />
+                    <XZtopRank info={ originRanking } />
                 </div>
             </div>
         </RankingWapper>
