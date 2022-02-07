@@ -6,6 +6,7 @@ export const PlayerBarWrapper = styled.div`
     position: fixed;
     left: 0;
     bottom: 0;
+    z-index: 2;
     background-position: 0 0;
     background-repeat: repeat-x;
     .content {

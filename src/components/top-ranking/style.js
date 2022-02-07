@@ -104,7 +104,7 @@ export const TopRankWapper = styled.div`
             }
             &:hover {
                 .oper {
-                    a {
+                    button {
                         display: block;
                     }
                 }
@@ -115,13 +115,15 @@ export const TopRankWapper = styled.div`
             .oper {
                 display: flex;
                 position: absolute;
+                align-items: center;
                 top: 7px;
                 right: 4px;
-                a {
+                button {
                     display: none;
                     width: 17px;
                     height: 17px;
                     background-image: url(${ require("@/assets/img/sprite_02.png") });
+                    cursor: pointer;
                 }
                 .play {
                     background-position: -267px -268px;

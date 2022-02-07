@@ -11,7 +11,11 @@ import {
     Operator
 } from './style'
 import { getSizeImage, formatDate, getPlaySong } from '@/utils/data-formate.js'
-import { getCurrentSongAction } from '../store/actionCreators'
+import { 
+    getCurrentSongAction,
+    changeSequeue,
+    changeCurrentIndexAndSongAction
+} from '../store/actionCreators'
 export default memo(function HYAppPlayerBar() {
     // props and state
     const [currentTime, setCurrentTime] = useState(0);
@@ -20,20 +24,27 @@ export default memo(function HYAppPlayerBar() {
     const [isPlaying, setIsPlaying] = useState(false)
 
     // redux hooks
-    const { currentSong } = useSelector(state => ({
-        currentSong:  state.getIn(["player", "currentSong"])
+    const { currentSong, sequeue } = useSelector(state => ({
+        currentSong:  state.getIn(["player", "currentSong"]),
+        sequeue: state.getIn(["player", "sequeue"])
     }), shallowEqual)
-    const dipatch = useDispatch()
+    const dispatch = useDispatch()
 
     // other hooks
     const audioRef = useRef();
-    // setCurrentTime(audioRef.current.currentTime)
     useEffect(() => {
-        dipatch(getCurrentSongAction(167876))
-    }, [dipatch])
+        dispatch(getCurrentSongAction(167876))
+    }, [dispatch])
     useEffect(() => {
         const currentSongSrc = getPlaySong(currentSong.id)
         audioRef.current.src = currentSongSrc
+        audioRef.current.play()
+        .then(res => {
+            setIsPlaying(true);
+        })
+        .catch(err => {
+            setIsPlaying(false);
+        })
     }, [currentSong])
 
     // other handle
@@ -42,8 +53,17 @@ export default memo(function HYAppPlayerBar() {
     const singerName = (currentSong.ar && currentSong.ar[0].name) || "";
     const songTime = (currentSong.dt && currentSong.dt) || 0;
 
-
     // handle function
+    const changeSequeueNum = () => {
+        let sequeueNum = sequeue + 1;
+        if(sequeue > 2) {
+            sequeueNum = 0;
+        }
+        dispatch(changeSequeue(sequeueNum))
+    }
+    const changeMusic = tag => {
+        dispatch(changeCurrentIndexAndSongAction(tag))
+    }
     const playMusic = useCallback(() => {
         isPlaying ? audioRef.current.pause() : audioRef.current.play()
         setIsPlaying(!isPlaying);
@@ -74,9 +94,9 @@ export default memo(function HYAppPlayerBar() {
         <PlayerBarWrapper className='sprite_player'>
             <div className='content wrap-v2'>
                 <Control isPlaying={ isPlaying }>
-                    <button className='sprite_player prv'></button>
+                    <button className='sprite_player prv' onClick={ e => changeMusic(-1) }></button>
                     <button className='sprite_player ply' onClick={ e => playMusic() }></button>
-                    <button className='sprite_player nxt'></button>
+                    <button className='sprite_player nxt' onClick={ e => changeMusic(1) }></button>
                 </Control>
                 <PlayInfo>
                     <div className='coverImg'>
@@ -104,14 +124,14 @@ export default memo(function HYAppPlayerBar() {
                         </div>
                     </div>
                 </PlayInfo>
-                <Operator>
+                <Operator sequence={sequeue}>
                     <div className="left">
                         <button className="sprite_player btn favor"></button>
                         <button className="sprite_player btn share"></button>
                     </div>
                     <div className="right sprite_player">
                         <button className="sprite_player btn volume"></button>
-                        <button className="sprite_player btn loop"></button>
+                        <button className="sprite_player btn loop" onClick={ e => changeSequeueNum() }></button>
                         <button className="sprite_player btn playlist"></button>
                     </div>
                     <audio ref={audioRef}

@@ -23,7 +23,6 @@ export const SongsCoverWapper = styled.div`
             position: absolute;
             left: 0;
             top: 0;
-            z-index: 1;
             background-position: 0 0;
         }
         .play {

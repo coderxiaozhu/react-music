@@ -1,10 +1,22 @@
 import React, { memo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { TopRankWapper } from './style'
 import { getSizeImage } from '@/utils/data-formate.js'
+import { getCurrentSongAction } from '@/pages/player/store'
+
 export default memo(function XZtopRank(props) {
+    // props and state
     const { info } = props;
     const { tracks = [] } = info;
+
+    // redux hooks
+    const dispatch = useDispatch();
+
+    // other handle
+    const playMusic = item => {
+        dispatch(getCurrentSongAction(item.id))
+    }
     return (
         <TopRankWapper>
             <div className='topHeader'>
@@ -26,11 +38,11 @@ export default memo(function XZtopRank(props) {
                         return (
                             <div className='content-item' key={ item.id }>
                                 <span className='rank'>{ index + 1 }</span>
-                                <a href='todo' title='4444'>{ item.name }</a>
+                                <a href='todo' title={ item.name }>{ item.name }</a>
                                 <div className='oper'>
-                                    <a href='todo' title='播放' className='play'> </a>
-                                    <a href='todo' title='添加到播放列表' className='addPlay'> </a>
-                                    <a href='todo' title='收藏' className='collect'> </a>
+                                    <button className='play' onClick={ e => playMusic(item) }> </button>
+                                    <button  className='addPlay'> </button>
+                                    <button  className='collect'> </button>
                                 </div>
                             </div>
                         )

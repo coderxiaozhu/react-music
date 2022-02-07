@@ -50,4 +50,7 @@ export function formatMinuteSecond(time) {
 export function getPlaySong(id) {
     return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 }
-  
+
+export function getRandomNumber(num) {
+    return Math.floor(Math.random() * num);
+}

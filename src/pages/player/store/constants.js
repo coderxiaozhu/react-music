@@ -1,1 +1,4 @@
 export const CHANGE_CURRENT_SONG = "player/CHANGE_CURRENT_SONG"
+export const CHANGE_CURRENT_INDEX = "player/CHANGE_CURRENT_INDEX"
+export const CHANGE_PLAYLIST = "play/CHANGE_PLAYLIST"
+export const CHANGE_SEQUEUE = "play/CHANGE_SEQUEUE"
