@@ -1,6 +1,6 @@
-import { getCurrentSongs } from '@/services/play';
+import { getCurrentSongs, getLyricData } from '@/services/play';
 import * as actionTypes from './constants'
-import { getRandomNumber } from '@/utils/data-formate.js'
+import { getRandomNumber, parseLyric } from '@/utils/data-formate.js'
 
 const changeCurrentSong = currentSong => ({
     type: actionTypes.CHANGE_CURRENT_SONG,
@@ -20,6 +20,16 @@ const changePlayList = playList => ({
 export const changeSequeue = sequeue => ({
     type: actionTypes.CHANGE_SEQUEUE,
     sequeue
+})
+
+export const changLyricList = lyricList => ({
+    type: actionTypes.CHANGE_LYRICLIST,
+    lyricList
+})
+
+export const changLyricCurrentIndex = lyricCurrentIndex => ({
+    type: actionTypes.CHANGE_LYRIC_CURRENT_INDEX,
+    lyricCurrentIndex
 })
 
 // 上一首下一首的歌曲
@@ -45,6 +55,7 @@ export const changeCurrentIndexAndSongAction = tag => {
         song = playList[currentIndex];
         dispatch(changeCurrentIndex(currentIndex));
         dispatch(changeCurrentSong(song));
+        dispatch(changeLyricAction(song.id))
     }
 }
 
@@ -57,6 +68,7 @@ export const getCurrentSongAction = (ids) => {
             dispatch(changeCurrentIndex(index));
             song = playList[index];
             dispatch(changeCurrentSong(song));
+            dispatch(changeLyricAction(song.id))
         }else {
             getCurrentSongs(ids).then(res => {
                 song = res.songs && res.songs[0];
@@ -67,7 +79,17 @@ export const getCurrentSongAction = (ids) => {
                 dispatch(changeCurrentSong(song))
                 dispatch(changePlayList(newPlayList));
                 dispatch(changeCurrentIndex(newPlayList.length - 1));
+                dispatch(changeLyricAction(song.id))
             })
         }
+    }
+}
+
+export const changeLyricAction = id => {
+    return dispatch => {
+        getLyricData(id).then(res => {
+            const lyricList =  parseLyric(res.lrc.lyric);
+            dispatch(changLyricList(lyricList));
+        })
     }
 }

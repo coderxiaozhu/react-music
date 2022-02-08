@@ -8,3 +8,12 @@ export const getCurrentSongs = (ids) => {
         }
     })
 }
+
+export const getLyricData = (id) => {
+    return request({
+        url: "/lyric",
+        params: {
+            id
+        }
+    })
+}

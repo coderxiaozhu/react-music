@@ -2,7 +2,7 @@ import React, { memo, useState, useCallback, useEffect, useRef } from 'react';
 // import { NavLink } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import { Slider } from 'antd';
+import { Slider, message } from 'antd';
 
 import {
     PlayerBarWrapper,
@@ -14,7 +14,8 @@ import { getSizeImage, formatDate, getPlaySong } from '@/utils/data-formate.js'
 import { 
     getCurrentSongAction,
     changeSequeue,
-    changeCurrentIndexAndSongAction
+    changeCurrentIndexAndSongAction,
+    changLyricCurrentIndex
 } from '../store/actionCreators'
 export default memo(function HYAppPlayerBar() {
     // props and state
@@ -24,9 +25,11 @@ export default memo(function HYAppPlayerBar() {
     const [isPlaying, setIsPlaying] = useState(false)
 
     // redux hooks
-    const { currentSong, sequeue } = useSelector(state => ({
+    const { currentSong, sequeue, lyricList, lyricCurrentIndex } = useSelector(state => ({
         currentSong:  state.getIn(["player", "currentSong"]),
-        sequeue: state.getIn(["player", "sequeue"])
+        sequeue: state.getIn(["player", "sequeue"]),
+        lyricList: state.getIn(["player", "lyricList"]),
+        lyricCurrentIndex: state.getIn(["player", "lyricCurrentIndex"])
     }), shallowEqual)
     const dispatch = useDispatch()
 
@@ -64,6 +67,15 @@ export default memo(function HYAppPlayerBar() {
     const changeMusic = tag => {
         dispatch(changeCurrentIndexAndSongAction(tag))
     }
+    const changeMusicEnd = () => {
+        if(sequeue === 2) {
+            // 单曲循环
+            audioRef.current.currentTime = 0;
+            audioRef.current.play();
+        }else {
+            dispatch(changeCurrentIndexAndSongAction(1));
+        }
+    }
     const playMusic = useCallback(() => {
         isPlaying ? audioRef.current.pause() : audioRef.current.play()
         setIsPlaying(!isPlaying);
@@ -73,6 +85,24 @@ export default memo(function HYAppPlayerBar() {
         if(!isChanging) {
             setCurrentTime(tempTime * 1000);
             setProgress(tempTime * 1000 / songTime * 100)
+        }   
+        
+        let i = 0;
+        for(; i < lyricList.length; i++) {
+            if(tempTime * 1000 < lyricList[i].lineTime) {
+                break;
+            }
+        }
+        if(lyricCurrentIndex !== i) {
+            dispatch(changLyricCurrentIndex(lyricList[i - 1].lineContent))
+        }
+        if(lyricCurrentIndex !== "") {
+            message.open({
+                key: "lyric",
+                content: lyricCurrentIndex,
+                duration: 0,
+                className: "lyric-class"
+            })
         }
     }
     const sliderChange = useCallback(value => {
@@ -136,6 +166,7 @@ export default memo(function HYAppPlayerBar() {
                     </div>
                     <audio ref={audioRef}
                            onTimeUpdate={ timeUpdate }
+                           onEnded={ changeMusicEnd }
                             />
                 </Operator>
             </div>

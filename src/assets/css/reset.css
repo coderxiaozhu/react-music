@@ -106,3 +106,12 @@ body, textarea, select, input, button {
   white-space: nowrap;
   word-wrap: normal;
 }
+
+.lyric-class .ant-message-notice-content {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, .3);
+  color: #fff;
+}

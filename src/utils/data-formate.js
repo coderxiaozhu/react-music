@@ -54,3 +54,22 @@ export function getPlaySong(id) {
 export function getRandomNumber(num) {
     return Math.floor(Math.random() * num);
 }
+
+export function parseLyric(lyricString) {
+    const parseRule = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/;
+    const lineString = lyricString.split("\n");
+    const lineArr = [];
+    for(let line of lineString) {
+        if(line) {
+            const res = parseRule.exec(line);
+            const time1 = res[1] * 60 * 1000;
+            const time2 = res[2] * 1000;
+            const time3 = res[3].length === 3 ? res[3] * 1 : res[3] * 10;
+            const lineTime = time1 + time2 + time3;
+            const lineContent = line.replace(parseRule, "").trim();
+            const lineObj = {lineTime, lineContent}
+            lineArr.push(lineObj);
+        }
+    }
+    return lineArr
+}

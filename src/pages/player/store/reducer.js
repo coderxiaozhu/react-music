@@ -208,7 +208,9 @@ const initalState = Map({
             "cp": 1372818,
             "publishTime": 0
         }],
-    sequeue: 0  
+    sequeue: 0,
+    lyricList: [],
+    lyricCurrentIndex: ""
 })
 
 const reducer = (state = initalState, action) => {
@@ -221,6 +223,10 @@ const reducer = (state = initalState, action) => {
             return state.set("playList", action.playList)
         case actionTypes.CHANGE_SEQUEUE:
             return state.set("sequeue", action.sequeue)
+        case actionTypes.CHANGE_LYRICLIST:
+            return state.set("lyricList", action.lyricList)
+        case actionTypes.CHANGE_LYRIC_CURRENT_INDEX: 
+            return state.set("lyricCurrentIndex", action.lyricCurrentIndex)
         default:
             return state
     }
